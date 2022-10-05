@@ -13,15 +13,6 @@
 unsigned int tperiod = 0;
 unsigned int oldtime = 0;
 
-void waitforpress(){
-    while(!bit_is_set(TIFR3,ICF3)) _delay_ms(500);    //timer3 ICP3(Pin C7)
-    // default mode: store time value on falling edge
-    set(TIFR3,ICF3);
-    tperiod = ICR3 - oldtime;
-    oldtime = ICR3;
-    PRINTNUM(tperiod);
-}
-
 void frequencydetect(){
     while(!bit_is_set(TIFR3,ICF3)) {
         clear(PORTC,6);
