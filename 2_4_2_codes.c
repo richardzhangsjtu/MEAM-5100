@@ -13,15 +13,6 @@
 unsigned int tperiod = 0;
 unsigned int oldtime = 0;
 
-void waitforpress(){
-    while(!bit_is_set(TIFR3,ICF3)) _delay_ms(500);    //timer3 ICP3(Pin C7)
-    // default mode: store time value on falling edge
-    set(TIFR3,ICF3);
-    tperiod = ICR3 - oldtime;
-    oldtime = ICR3;
-    PRINTNUM(tperiod);
-}
-
 void frequencydetect(){
     while(!bit_is_set(TIFR3,ICF3)) {
         clear(PORTC,6);
@@ -48,14 +39,14 @@ void frequencydetect(){
         set(PORTB,7);                       // set PB7's LED ON 
     }
 
-    else{                                    // for noise or light's frequency other than 23 and 700Hz, turn off both of the LEDs
+    else{                                    // for noise or light's frequency other than 23,200 and 700Hz, turn off all of the LEDs
         clear(PORTC,6);
         clear(PORTB,6);
         clear(PORTB,7);
     }
 }
 
-
+// notch filter(resistors and capacitors) is set to 60Hz, but the effect is not so obvious, the signal may have an effect on 200Hz
 
 
 int main(void)
