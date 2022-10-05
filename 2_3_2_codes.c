@@ -26,7 +26,6 @@ void frequencydetect(){
     while(!bit_is_set(TIFR3,ICF3)) {
         clear(PORTC,6);
         clear(PORTB,6);
-        clear(PORTB,7);
     } //timer3 ICP3(Pin C7), when there's no input remain the off status of each LED
     // default mode: store time value on falling edge
     set(TIFR3,ICF3);
@@ -35,23 +34,17 @@ void frequencydetect(){
     int Hz = 15625/tperiod;   //since the prescaler is set to 15.625khz, the frequency is determined by input capture and timer mode
     PRINTNUM(Hz)
 
-    if(Hz >= 15 && Hz<= 30){                 // set the accuracy to be +5/-5 around 23HZ
+    if(Hz >= 15 && Hz<= 30){                 // set the accuracy around 23HZ
         clear(PORTC,6);
         set(PORTB,6);                       // set PC6's LED ON and PB6's LED off
     }
-    else if(Hz >= 600 && Hz <= 800){         // set the accuracy to be +5/-5 around 700HZ
+    else if(Hz >= 600 && Hz <= 800){         // set the accuracy around 700HZ
         clear(PORTB,6);
         set(PORTC,6);                        // set PB6's LED ON and PC6's LED off
     }
-
-    else if(Hz >= 180 && Hz <= 300){
-        set(PORTB,7);
-    }
-
     else{                                    // for noise or light's frequency other than 23 and 700Hz, turn offf both of the LEDs
         clear(PORTC,6);
         clear(PORTB,6);
-        clear(PORTB,7);
     }
 }
 
