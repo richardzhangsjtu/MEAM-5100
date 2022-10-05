@@ -23,12 +23,12 @@ void waitforpress(){
 }
 
 void check(){
-    int pinstate = bit_is_set(PINC,7);
-    if(pinstate){
-        clear(PORTC,6);                   //turn off C6 LED
+    
+    if(bit_is_set(PINC,7)){
+        set(PORTC,6);                   //turn on C6 LED
     }
     else{
-        set(PORTC,6)                      // turn on C6 LED
+        clear(PORTC,6)                      // turn off C6 LED
     }
 }
 
