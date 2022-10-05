@@ -72,6 +72,7 @@ int main(void)
     clear(DDRC,7);            //make sure Port C7 input is clear
     set(DDRC,6);             // reset the sixth bit of DDRC register as 1, Port C6 as output
     set(DDRB,6);              // reset the sixth bit of DDRB register as 1, Port B6 as output
+    set(DDRB,7);               // reset the seventh bit of DDRB register as 1, Port B7 as output
 
     for(;;){
      frequencydetect();     // call subroutine to find out the frequency and light corresponding LEDs
