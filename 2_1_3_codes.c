@@ -10,7 +10,7 @@
 #define PRINTNUM(x) m_usb_tx_uint(x); m_usb_tx_char(10); m_usb_tx_char(13);
 
 unsigned int tperiod = 0;
-unsigned int oldtime = 0;
+unsigned long int oldtime = 0;
 
 void waitforpress(){
     while(!bit_is_set(TIFR3,ICF3)) _delay_ms(500);    //timer3 ICP3(Pin C7)
@@ -18,7 +18,10 @@ void waitforpress(){
     set(TIFR3,ICF3);
     tperiod = ICR3 - oldtime;
     oldtime = ICR3;
-    PRINTNUM(tperiod);
+    tperiod = tperiod*1000/15625; // to calculate the time it takes under /1024 prescaler in ms
+    m_usb_tx_uint(tperiod);
+    m_usb_tx_string("ms");
+    m_usb_tx_char(10); m_usb_tx_char(13);
 }
 
 int main(void)
@@ -35,8 +38,7 @@ int main(void)
     set(PORTC,7);             // pull up on PC7
       
     for(;;){
-        m_usb_tx_string("hit time =");
-        waitforpress();
+     waitforpress();         // continue collecting the time of pressing
     }
 
     return 0;               /* never reached */
