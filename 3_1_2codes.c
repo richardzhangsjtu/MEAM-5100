@@ -116,7 +116,7 @@ void ADC_setup(int ADCchannel){
 
 // Subroutine for reading one ADC channel
 void ADC_read(){
-    while(!bit_is_set(ADCSRA,ADIF));    //
+    while(!bit_is_set(ADCSRA,ADIF));    // wait while ADC conversion is processing
 
      if(bit_is_set(ADCSRA,ADIF)){       // judge whether ADC conversion is complete or not
          set(ADCSRA,ADIF);              // reset the flag
